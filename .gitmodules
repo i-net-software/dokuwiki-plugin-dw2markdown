@@ -1,0 +1,3 @@
+[submodule "lib/converter"]
+	path = lib/converter
+	url = https://github.com/Martin-de-la-Iglesia/DokuWiki-to-Markdown-Converter.git
