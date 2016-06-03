@@ -2,8 +2,8 @@ language: php
 php:
 - '5.5'
 script:
-- mkdir build
-- tar -czf build/dw2markdown.tgz --exclude='build/dw2markdown.tgz' * 
+- mkdir ../build
+- tar -czf ../build/dw2markdown.tgz --exclude='build/dw2markdown.tgz' * 
 deploy:
   provider: releases
   api_key:
