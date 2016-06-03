@@ -1,11 +1,13 @@
 language: php
 php:
 - '5.5'
-- '5.4'
+script:
+- mkdir build
+- tar -czf build/dw2markdown.tgz *
 deploy:
   provider: releases
   api_key:
     secure: iu6Ahx6EghpQW73c1O7McKfwnZEGdaMbteDzykxprdBMRZXxRfy1u5+ygUGRTuo+f4UABSCEj8ht4DOLJvCodjUF3XQTOFZkKgnKcIjETQGeqcW/LtqxR70/FbpD6K/z6plSTmAUQQlL5A+PMS6+56JBN95Mm2mOJIkRXl4hHD/bpBVz9LfvE912DB2jEJlFOHOqkJ3DzibMPLVi569OAtd3FH4onI2DSM9RqM3fD0Wx5WU9upxOZqLhwRSi8N/YusAAZkeo/bhl4i5hCuc6Dn55BdUT7MH2xm1amJEmQByg7E/rP4X3G/wycCYMF2PoDNQKGUsRoYpIw7lsawSP2H2XZjubGdfbbBdEGN2DF6VYHdsqKl9w9otl96E2ErGSSAhs0Bwlv0k400enD9Pn0an9Vqt+qPB9cKUD0bx1YwIvvKckNGnhD1z12Pw36eg/2qp74a5G66IME5tAvKIdz6s+OvxmUODR1mpQZ7VBqcNQ1ZlL+u0m2lCGhPjGscIMfT+C+KVSTIHEViSF4hxTS2WZq/uq1BP+s2ZUnOzEEmXkWOzLvpH1pNbiqwgBo0RO/ZfpQs1tLed8zwjnGE7wKP/RQzspd7+8YocSB8AMvHveVpKAdRthrm6k5qhuWJYNlCccQdIGOnXcxbhaT2E2WlcQZtVc1m0yhx7FW75IEwE=
-  file: build/dw2markdown.zip
+  file: build/dw2markdown.tgz
   on:
     repo: i-net-software/dokuwiki-plugin-dw2markdown
