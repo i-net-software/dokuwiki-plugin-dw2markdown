@@ -222,7 +222,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
         /**
          * Open an unordered list
          */
-        function listu_open() {
+        function listu_open($classes = null) {
         }
     
         /**
@@ -234,7 +234,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
         /**
          * Open an ordered list
          */
-        function listo_open() {
+        function listo_open($classes = null) {
         }
     
         /**
@@ -292,7 +292,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          *
          * @param string $text The PHP code
          */
-        function php($text) {
+        function php($text, $wrapper = 'code') {
         }
     
         /**
@@ -313,7 +313,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          *
          * @param string $text The HTML
          */
-        function html($text) {
+        function html($text, $wrapper = 'code') {
         }
     
         /**
@@ -411,7 +411,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string|int $x first value
          * @param string|int $y second value
          */
-        function multiplyentity() {
+        function multiplyentity($x, $y) {
             $this->doc .= "$x×$y";
         }
     
@@ -455,7 +455,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $link The link name
          * @see http://en.wikipedia.org/wiki/CamelCase
          */
-        function camelcaselink($link) {
+        function camelcaselink($link, $returnonly = false) {
             $this->doc .= '[[' . $link . ']]';
         }
     
@@ -465,7 +465,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $hash hash link identifier
          * @param string $name name for the link
          */
-        function locallink($hash, $name = null) {
+        function locallink($hash, $name = null, $returnonly = false) {
             $this->doc .= '[[' . $name . ']]';
         }
     
@@ -475,7 +475,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string       $link  page ID to link to. eg. 'wiki:syntax'
          * @param string|array $title name for the link, array for media file
          */
-        function internallink($link, $title = null) {
+        function internallink($id, $name = null, $search = null, $returnonly = false, $linktype = 'content') {
             $this->doc .= '[[' . $link . '|' . $title . ']]';
         }
     
@@ -485,7 +485,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string       $link  full URL with scheme
          * @param string|array $title name for the link, array for media file
          */
-        function externallink($link, $title = null) {
+        function externallink($link, $title = null, $returnonly = false) {
             $this->doc .= '[[' . $link . '|' . $title . ']]';
         }
     
@@ -509,7 +509,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string       $wikiName indentifier (shortcut) for the remote wiki
          * @param string       $wikiUri  the fragment parsed from the original link
          */
-        function interwikilink($link, $title = null, $wikiName, $wikiUri) {
+        function interwikilink($match, $name, $wikiName, $wikiUri, $returnonly = false) {
         }
     
         /**
@@ -527,7 +527,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string       $link  the link
          * @param string|array $title name for the link, array for media file
          */
-        function windowssharelink($link, $title = null) {
+        function windowssharelink($link, $title = null, $returnonly = false) {
         }
     
         /**
@@ -538,7 +538,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $address Email-Address
          * @param string|array $name name for the link, array for media file
          */
-        function emaillink($address, $name = null) {
+        function emaillink($address, $name = null, $returnonly = false) {
         }
     
         /**
@@ -553,7 +553,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $linking linkonly|detail|nolink
          */
         function internalmedia($src, $title = null, $align = null, $width = null,
-                               $height = null, $cache = null, $linking = null) {
+                               $height = null, $cache = null, $linking = null, $return = false) {
         }
     
         /**
@@ -568,7 +568,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $linking linkonly|detail|nolink
          */
         function externalmedia($src, $title = null, $align = null, $width = null,
-                               $height = null, $cache = null, $linking = null) {
+                               $height = null, $cache = null, $linking = null, $return = false) {
         }
     
         /**
@@ -606,7 +606,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param int $numrows NOT IMPLEMENTED
          * @param int $pos     byte position in the original source
          */
-        function table_open($maxcols = null, $numrows = null, $pos = null) {
+        function table_open($maxcols = null, $numrows = null, $pos = null, $classes = null) {
         }
     
         /**
@@ -646,7 +646,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
         /**
          * Open a table row
          */
-        function tablerow_open() {
+        function tablerow_open($classes = null) {
             $this->doc .= DOKU_LF;
         }
     
@@ -663,7 +663,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $align left|center|right
          * @param int    $rowspan
          */
-        function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
+        function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
             $this->doc .= str_repeat( '^', $colspan );
         }
     
@@ -680,7 +680,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $align left|center|right
          * @param int    $rowspan
          */
-        function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
+        function tablecell_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
             
             if ( $this->doc[strlen($this->doc)-1] == '|' ) {
                 $colspan--;    
