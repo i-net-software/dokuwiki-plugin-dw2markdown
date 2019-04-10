@@ -354,7 +354,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $lang programming language to use for syntax highlighting
          * @param string $file file path label
          */
-        function file($text, $lang = null, $file = null) {
+        function file($text, $language = NULL, $filename = NULL, $options = NULL) {
         }
     
         /**
@@ -364,7 +364,7 @@ if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkd
          * @param string $lang programming language to use for syntax highlighting
          * @param string $file file path label
          */
-        function code($text, $lang = null, $file = null) {
+        function code($text, $language = NULL, $filename = NULL, $options = NULL) {
             $this->doc .= '<code ' . $lang . '>' . DOKU_LF . $text . DOKU_LF . '</code>';
         }
     
