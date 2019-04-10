@@ -12,9 +12,9 @@ if (!defined('DOKU_INC')) die();
 require_once DOKU_INC.'inc/parser/renderer.php';
 
 
-if ( file_exists( DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkdown.php' ) ) {
+if ( file_exists( DOKU_PLUGIN.'dw2markdown/converter/scripts/DokuWikiToMarkdown.php' ) ) {
     
-    require_once DOKU_PLUGIN.'dw2markdown/lib/converter/scripts/DokuWikiToMarkdown.php';
+    require_once DOKU_PLUGIN.'dw2markdown/converter/scripts/DokuWikiToMarkdown.php';
     
     class renderer_plugin_dw2markdown extends Doku_Renderer_xhtml {
 
