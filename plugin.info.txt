@@ -4,4 +4,4 @@ email  tools@inetsoftware.de
 date   2016-06-02
 name   dw2markdown plugin
 desc   Render a DW page to Markdown
-url    https://github.org/i-net-software/dokuwiki-plugin-dw2markdown
+url    https://github.com/i-net-software/dokuwiki-plugin-dw2markdown
