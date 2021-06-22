@@ -3,7 +3,7 @@ dw2markdown Plugin for DokuWiki
 Render a DW page to Markdown
 
 All documentation for this plugin can be found at
-https://github.org/i-net-software/dokuwiki-plugin-dw2markdown
+https://github.com/i-net-software/dokuwiki-plugin-dw2markdown
 
 If you install this plugin manually, make sure it is installed in
 lib/plugins/dw2markdown/ - if the folder is called different it
