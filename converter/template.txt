@@ -1,4 +1,0 @@
----
-layout: liquibase
-lang: en
----
