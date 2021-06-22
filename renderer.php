@@ -38,6 +38,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
         //$this->doc = $converter->convert( $this->doc );
         
         $this->doc = preg_replace("/(\r?\n){3,}/", "\n\n", $this->doc);
+        $this->doc = preg_replace("/^\s+/", "", $this->doc); // remove leading space and empty lines
     }
 
     /**
@@ -230,6 +231,9 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      */
     function listu_close() {
         array_pop( $this->listMode );
+        if ( empty($this->listMode) ) {
+            $this->doc .= DOKU_LF;
+        }
     }
 
     /**
@@ -244,6 +248,9 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      */
     function listo_close() {
         array_pop( $this->listMode );
+        if ( empty($this->listMode) ) {
+            $this->doc .= DOKU_LF;
+        }
     }
 
     /**
@@ -253,6 +260,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param bool $node true when a node; false when a leaf
      */
     function listitem_open($level,$node=false) {
+        $this->doc .= DOKU_LF;
         $this->doc .= str_repeat(' ', $level*2) . $this->listMode[count($this->listMode)-1];
     }
 
@@ -260,7 +268,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Close a list item
      */
     function listitem_close() {
-        $this->doc .= DOKU_LF;
+//        $this->doc .= DOKU_LF;
     }
 
     /**
@@ -273,7 +281,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Stop the content of a list item
      */
     function listcontent_close() {
-        $this->doc .= DOKU_LF;
+//        $this->doc .= DOKU_LF;
     }
 
     /**
