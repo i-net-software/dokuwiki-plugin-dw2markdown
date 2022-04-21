@@ -380,7 +380,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param string $file file path label
      */
     function code($text, $language = NULL, $filename = NULL, $options = NULL) {
-        $this->doc .= '```' . $lang . DOKU_LF . $text . DOKU_LF . '```';
+        $this->doc .= DOKU_LF . '```' . $language . DOKU_LF . trim($text) . DOKU_LF . '```' . DOKU_LF;
     }
 
     /**
@@ -465,56 +465,6 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
     }
 
     /**
-     * Render a CamelCase link
-     *
-     * @param string $link The link name
-     * @see http://en.wikipedia.org/wiki/CamelCase
-     */
-    function camelcaselink($link, $returnonly = false) {
-        $this->externallink($link, $link, $returnonly);
-    }
-
-    /**
-     * Render a page local link
-     *
-     * @param string $hash hash link identifier
-     * @param string $name name for the link
-     */
-    function locallink($hash, $name = null, $returnonly = false) {
-        $this->externallink( $hash, $name, $returnonly );
-    }
-
-    /**
-     * Render a wiki internal link
-     *
-     * @param string       $link  page ID to link to. eg. 'wiki:syntax'
-     * @param string|array $title name for the link, array for media file
-     */
-    function internallink($id, $name = null, $search = null, $returnonly = false, $linktype = 'content') {
-        $this->externallink( wl($id), $name, $returnonly );
-    }
-
-    /**
-     * Render an external link
-     *
-     * @param string       $link  full URL with scheme
-     * @param string|array $title name for the link, array for media file
-     */
-    function externallink($link, $title = null, $returnonly = false) {
-        
-        if ( empty($title) ) {
-            $title = $link;
-        }
-
-        $res = '[' . $title . '](' . $link . ')';
-        if ( $returnonly ) {
-            return $res;
-        }
-        
-        $this->doc .= $res;
-    }
-
-    /**
      * Render the output of an RSS feed
      *
      * @param string $url    URL of the feed
@@ -523,108 +473,6 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
     function rss($url, $params) {
         $this->externallink( $url );
     }
-
-    /**
-     * Render an interwiki link
-     *
-     * You may want to use $this->_resolveInterWiki() here
-     *
-     * @param string       $link     original link - probably not much use
-     * @param string|array $title    name for the link, array for media file
-     * @param string       $wikiName indentifier (shortcut) for the remote wiki
-     * @param string       $wikiUri  the fragment parsed from the original link
-     */
-    function interwikilink($match, $name, $wikiName, $wikiUri, $returnonly = false) {
-    }
-
-    /**
-     * Link to file on users OS
-     *
-     * @param string       $link  the link
-     * @param string|array $title name for the link, array for media file
-     */
-    function filelink($link, $title = null) {
-    }
-
-    /**
-     * Link to windows share
-     *
-     * @param string       $link  the link
-     * @param string|array $title name for the link, array for media file
-     */
-    function windowssharelink($link, $title = null, $returnonly = false) {
-    }
-
-    /**
-     * Render a linked E-Mail Address
-     *
-     * Should honor $conf['mailguard'] setting
-     *
-     * @param string $address Email-Address
-     * @param string|array $name name for the link, array for media file
-     */
-    function emaillink($address, $name = null, $returnonly = false) {
-        $this->externallink( 'email:' . $address, $name, $returnonly );
-    }
-
-    /**
-     * Render an internal media file
-     *
-     * @param string $src     media ID
-     * @param string $title   descriptive text
-     * @param string $align   left|center|right
-     * @param int    $width   width of media in pixel
-     * @param int    $height  height of media in pixel
-     * @param string $cache   cache|recache|nocache
-     * @param string $linking linkonly|detail|nolink
-     */
-    function internalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $return = false) {
-    }
-
-    /**
-     * Render an external media file
-     *
-     * @param string $src     full media URL
-     * @param string $title   descriptive text
-     * @param string $align   left|center|right
-     * @param int    $width   width of media in pixel
-     * @param int    $height  height of media in pixel
-     * @param string $cache   cache|recache|nocache
-     * @param string $linking linkonly|detail|nolink
-     */
-    function externalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $return = false) {
-    }
-
-    /**
-     * Render a link to an internal media file
-     *
-     * @param string $src     media ID
-     * @param string $title   descriptive text
-     * @param string $align   left|center|right
-     * @param int    $width   width of media in pixel
-     * @param int    $height  height of media in pixel
-     * @param string $cache   cache|recache|nocache
-     */
-    function internalmedialink($src, $title = null, $align = null,
-                               $width = null, $height = null, $cache = null) {
-    }
-
-    /**
-     * Render a link to an external media file
-     *
-     * @param string $src     media ID
-     * @param string $title   descriptive text
-     * @param string $align   left|center|right
-     * @param int    $width   width of media in pixel
-     * @param int    $height  height of media in pixel
-     * @param string $cache   cache|recache|nocache
-     */
-    function externalmedialink($src, $title = null, $align = null,
-                               $width = null, $height = null, $cache = null) {
-    }
-
     /**
      * Start a table
      *
@@ -651,13 +499,14 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      */
     function tablethead_open() {
         $this->tableColumns = 0;
+        $this->doc .= DOKU_LF . '|';
     }
 
     /**
      * Close a table header
      */
     function tablethead_close() {
-        $this->doc .= DOKU_LF . str_repeat('--- |', $this->tableColumns);
+        $this->doc .= str_repeat('---|', $this->tableColumns);
     }
 
     /**
@@ -676,7 +525,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Open a table row
      */
     function tablerow_open($classes = null) {
-        $this->doc .= DOKU_LF;
+        // $this->doc .= DOKU_LF;
     }
 
     /**
@@ -694,7 +543,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param int    $rowspan
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
-        $this->doc .= str_repeat( '|', $colspan );
+        $this->doc .= str_repeat( '|', $colspan-1 );
         $this->tableColumns += $colspan; 
     }
 
@@ -725,7 +574,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Close a table cell
      */
     function tablecell_close() {
-        $this->doc .= '|';
+        //$this->doc .= '|';
     }
     
     function getFormat() {
@@ -733,4 +582,31 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
     }
 
     #endregion
+    /**
+     * Build a link
+     *
+     * Assembles all parts defined in $link returns HTML for the link
+     *
+     * @param array $link attributes of a link
+     * @return string
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function _formatLink($link) {
+        //make sure the url is XHTML compliant (skip mailto)
+        if(substr($link['url'], 0, 7) != 'mailto:') {
+            $link['url'] = str_replace('&', '&amp;', $link['url']);
+            $link['url'] = str_replace('&amp;amp;', '&amp;', $link['url']);
+        }
+        //remove double encodings in titles
+        $link['title'] = str_replace('&amp;amp;', '&amp;', $link['title']);
+
+        // be sure there are no bad chars in url or title
+        // (we can't do this for name because it can contain an img tag)
+        $link['url']   = strtr($link['url'], array('>' => '%3E', '<' => '%3C', '"' => '%22'));
+        $link['title'] = strtr($link['title'], array('>' => '&gt;', '<' => '&lt;', '"' => '&quot;'));
+  
+        $res = $link['pre'] . '[' . $link['name'] . '](' . $link['url'] . ')' . $link['suf'];
+        return $res;
+    }
 }
