@@ -48,7 +48,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param int    $level header level
      * @param int    $pos   byte position in the original source
      */
-    function header($text, $level, $pos) {
+    function header($text, $level, $pos, $returnonly = false) {
         $this->doc .= str_repeat("#", $level) . ' ' . $text . DOKU_LF;
     }
 
