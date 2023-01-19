@@ -525,14 +525,13 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Open a table row
      */
     function tablerow_open($classes = null) {
-        // $this->doc .= DOKU_LF;
     }
 
     /**
      * Close a table row
      */
     function tablerow_close() {
-        $this->doc .= DOKU_LF;
+        $this->doc .= '|' . DOKU_LF;
     }
 
     /**
@@ -543,7 +542,7 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param int    $rowspan
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
-        $this->doc .= str_repeat( '|', $colspan-1 );
+        $this->doc .= str_repeat( '|', $colspan );
         $this->tableColumns += $colspan; 
     }
 
@@ -551,7 +550,6 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Close a table header cell
      */
     function tableheader_close() {
-        $this->doc .= '|';
     }
 
     /**
@@ -562,11 +560,6 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * @param int    $rowspan
      */
     function tablecell_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
-        
-        if ( $this->doc[strlen($this->doc)-1] == '|' ) {
-            $colspan--;    
-        }
-        
         $this->doc .= str_repeat( '|', $colspan );
     }
 
@@ -574,11 +567,32 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Close a table cell
      */
     function tablecell_close() {
-        //$this->doc .= '|';
     }
     
     function getFormat() {
         return 'markdown';
+    }
+
+    /**
+     * Render a page local link
+     *
+     * @param string $hash       hash link identifier
+     * @param string $name       name for the link
+     * @param bool   $returnonly whether to return html or write to doc attribute
+     * @return void|string writes to doc attribute or returns html depends on $returnonly
+     */
+    public function locallink($hash, $name = null, $returnonly = false) {
+        global $ID;
+        $name  = $this->_getLinkTitle($name, $hash, $isImage);
+        $hash  = $this->_headerToLink($hash);
+
+        $doc = '['.$name.'](#'.$hash.')';
+
+        if($returnonly) {
+          return $doc;
+        } else {
+          $this->doc .= $doc;
+        }
     }
 
     #endregion
