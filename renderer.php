@@ -499,14 +499,14 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      */
     function tablethead_open() {
         $this->tableColumns = 0;
-        $this->doc .= DOKU_LF . '|';
+        $this->doc .= DOKU_LF; // . '|';
     }
 
     /**
      * Close a table header
      */
     function tablethead_close() {
-        $this->doc .= str_repeat('---|', $this->tableColumns);
+        $this->doc .= '|' . str_repeat('---|', $this->tableColumns) . DOKU_LF;
     }
 
     /**
