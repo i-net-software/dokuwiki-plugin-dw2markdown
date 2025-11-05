@@ -1,7 +1,7 @@
 base   dw2markdown
 author i-net software
 email  tools@inetsoftware.de
-date   2023-01-19
+date   2025-11-04
 name   dw2markdown plugin
 desc   Render a DW page to Markdown
 url    https://github.com/i-net-software/dokuwiki-plugin-dw2markdown

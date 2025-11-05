@@ -14,6 +14,10 @@ require_once DOKU_INC.'inc/parser/renderer.php';
 
 class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
 
+    private $mermaidBuffer = '';
+    private $inMermaid = false;
+
+
     function document_start() {
         global $ID;
 
@@ -567,6 +571,26 @@ class Renderer_Plugin_dw2markdown extends Doku_Renderer_xhtml {
      * Close a table cell
      */
     function tablecell_close() {
+    }
+
+    /**
+     * Called when a plugin is encountered
+    **/
+    function plugin($name, $data, $state = '', $match = '') {
+        if ($name === 'mermaid') {
+            if ($state == 1) { // start of schema
+                $this->mermaidBuffer = '```mermaid';
+                $this->inMermaid = true;
+            } elseif ($state == 3) { // schema content
+                $this->mermaidBuffer .= $data[1];
+            } elseif ($state == 4) { // end of schema
+                //$this->logToFile("Mermaid: end of schema");
+                $this->mermaidBuffer .= '```' . DOKU_LF;
+                $this->doc .= $this->mermaidBuffer;
+                $this->inMermaid = false;
+            } 
+        }
+        return true;
     }
     
     function getFormat() {
